@@ -1177,7 +1177,7 @@ class RoomController extends AbstractController
         // Create a WebSocket connection using Ratchet Client
         $connector = new RatchetConnector($loop);
 
-        $connector('ws://0.0.0.0:1700')
+        $connector('ws://3.68.191.127:1700')
             ->then(function (WebSocket $conn) use ($msg) {
                 // Log a message when the connection is successful
                 error_log("Connected to WebSocket, sending message");

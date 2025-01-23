@@ -1,0 +1,16 @@
+{
+    auto_https off
+}
+
+:80
+
+route {
+    mercure {
+        publisher_jwt !ChangeThisMercureHubJWTSecretKey!
+        subscriber_jwt !ChangeThisMercureHubJWTSecretKey!
+        cors_origins *
+        publish_origins *
+        anonymous
+        subscriptions
+    }
+}

@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   database:
     container_name: database
@@ -20,12 +21,11 @@ services:
       context: ./php
     ports:
       - '9000:9000'
-      - '1700:1700'  # Add this line for WebSocket
-
+      - '1700:1700'  # WebSocket port
     environment:
-      MERCURE_URL: ${MERCURE_URL:-http://mercure/.well-known/mercure}
-      MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL:-http://localhost:81/.well-known/mercure}
-      MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_URL: http://mercure/.well-known/mercure
+      MERCURE_PUBLIC_URL: http://3.120.129.199:81/.well-known/mercure
+      MERCURE_JWT_SECRET: '!ChangeThisMercureHubJWTSecretKey!'
     volumes:
       - ./app:/var/www/symfony_docker
     depends_on:
@@ -42,6 +42,7 @@ services:
     depends_on:
       - php
       - database
+      - mercure
 
   mercure:
     container_name: mercure
@@ -52,7 +53,10 @@ services:
       SERVER_NAME: ':80'
       MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
       MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-      CORS_ALLOWED_ORIGINS: "*"
+      CORS_ALLOWED_ORIGINS: http://3.120.129.199:8080
+      ALLOW_ANONYMOUS: 1
+      MERCURE_PUBLISH_URL: http://3.120.129.199:81/.well-known/mercure
+      MERCURE_SUBSCRIBE_URL: http://3.120.129.199:81/.well-known/mercure
     ports:
       - "81:80"
     volumes:

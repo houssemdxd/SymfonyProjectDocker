@@ -16,6 +16,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
+RUN sudo apt install supervisor -y
+
+RUN sudo systemctl enable supervisor
+RUN sudo systemctl start supervisor
+    
 # Create supervisor directory and copy config
 RUN mkdir -p /etc/supervisor/conf.d/
 COPY supervisord.conf /etc/supervisor/conf.d/

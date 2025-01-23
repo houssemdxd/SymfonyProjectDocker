@@ -1,16 +1,11 @@
-{
-    auto_https off
-}
+:80 {
+    route {
+        mercure {
+            publish_jwt '!ChangeThisMercureHubJWTSecretKey!'
+            subscribe_jwt '!ChangeThisMercureHubJWTSecretKey!'
+            cors_origins http://3.120.129.199:8080  # Match the frontend URL
+        }
 
-:80
-
-route {
-    mercure {
-        publisher_jwt !ChangeThisMercureHubJWTSecretKey!
-        subscriber_jwt !ChangeThisMercureHubJWTSecretKey!
-        cors_origins *
-        publish_origins *
-        anonymous
-        subscriptions
+        respond /health "OK" 200
     }
 }
